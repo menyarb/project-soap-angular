@@ -4,12 +4,10 @@ import { Routes } from '@angular/router';
 
 import { AppListsComponent } from './listsclient/listsclient.component';
 import { AppListsCompteComponent } from './listscompte/listscompte.component';
-
-import { AppMenuComponent } from './menu/menu.component';
 import { AppClientComponent } from './client/client.component';
 import { Compte } from './compteBank/compte';
-
-import { AppTablesComponent } from './tables/tables.component';
+import { ModifeClientComponent } from './modife-client/modife-client.component';
+import { ModifeCompteComponent } from './modife-compte/modife-compte.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -25,22 +23,23 @@ export const UiComponentsRoutes: Routes = [
         path: 'listsCompte',
         component: AppListsCompteComponent,
       }, 
+      
+     
       {
-        path: 'menu',
-        component: AppMenuComponent,
+        path: 'ajoute-client',
+        component: AppClientComponent,
       },
       {
-        path: 'client',
-        component: AppClientComponent,
+        path: 'modife-client',
+        component: ModifeClientComponent,
       },
       {
         path: 'Compte',
         component: Compte,
       },
-     
       {
-        path: 'tables',
-        component: AppTablesComponent,
+        path: 'modife-compte',
+        component: ModifeCompteComponent,
       },
     ],
   },

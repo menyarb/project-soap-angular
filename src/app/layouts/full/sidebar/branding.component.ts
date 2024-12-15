@@ -6,10 +6,11 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   template: `
-    <div class="branding">
+    <div class="branding"   style=" margin-left: 60px;" >
       <a [routerLink]="['/']">
         <img
-          src="./assets/images/logos/dark-logo.svg"
+        style="width: 60px;"
+          src="./assets/images/logos/bank.jpg"
           class="align-middle m-2"
           alt="logo"
         />

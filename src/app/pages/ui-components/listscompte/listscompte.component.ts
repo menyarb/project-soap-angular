@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 export interface Compte {
   nom: string;
@@ -30,18 +31,16 @@ export class AppListsCompteComponent {
 
   displayedColumns: string[] = ['nom', 'rib', 'solde', 'actions'];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog,private router: Router) {}
 
   // Ajouter un compte
   ajouterCompte(): void {
-    console.log('Ajouter un Compte');
-    // Logique d'ajout de compte à implémenter
+    this.router.navigate(['/ui-components/ajoute-copmte']);
   }
 
   // Modifier un compte
   modifierCompte(compte: Compte): void {
-    console.log('Modifier le Compte:', compte);
-    // Logique de modification à implémenter
+    this.router.navigate(['/ui-components/modife-compte']);
   }
 
   // Supprimer un compte avec confirmation

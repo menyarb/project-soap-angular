@@ -9,13 +9,13 @@ export const navItems: NavItem[] = [
     displayName: 'Client',
     iconName: 'user',
     bgcolor: 'primary',
-    route: '/ui-components/tooltips',
+    route: '/ui-components/listsclient',
   },
   {
     displayName: 'Compte',
     iconName: 'user',
     bgcolor: 'primary',
-    route: '/ui-components/Compte',
+    route: '/ui-components/listsCompte',
   },
   {
     navCap: 'Auth',
@@ -26,11 +26,6 @@ export const navItems: NavItem[] = [
     bgcolor: 'accent',
     route: '/authentication/login',
   },
-  {
-    displayName: 'Register',
-    iconName: 'user-plus',
-    bgcolor: 'warning',
-    route: '/authentication/register',
-  },
+ 
 
 ];

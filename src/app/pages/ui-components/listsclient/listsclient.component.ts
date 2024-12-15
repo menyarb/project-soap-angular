@@ -4,6 +4,9 @@ import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {DatePipe} from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
+import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 export interface Section {
@@ -18,7 +21,8 @@ export interface Section {
   templateUrl: './listsclient.component.html',
 })
 export class AppListsComponent {
-  constructor() {}
+
+  constructor(private dialog: MatDialog,private router: Router) {}
   // Liste des clients (statique pour cet exemple)
   clients = [
     { nom: 'Dupont Jean', email: 'jean.dupont@mail.com', telephone: '0123456789' },
@@ -31,20 +35,30 @@ export class AppListsComponent {
 
   // Ajouter un client
   ajouterClient() {
-    console.log('Ajouter un client');
-    // Logique d'ajout de client
+  // Naviguer vers la liste des clients
+  this.router.navigate(['/ui-components/ajoute-client']);
   }
 
   // Modifier un client
   modifierClient(client: any) {
-    console.log('Modifier le client:', client);
-    // Logique de modification d'un client
+    this.router.navigate(['/ui-components/modife-compte']);
   }
 
   // Supprimer un client
   supprimerClient(client: any) {
-    console.log('Supprimer le client:', client);
-    // Logique de suppression d'un client
+       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '300px',
+          data: { message: 'Êtes-vous sûr de vouloir supprimer ce compte ?' },
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            console.log('Compte supprimé :', client);
+            this.clients = this.clients.filter((c) => c !== client);
+          } else {
+            console.log('Suppression annulée');
+          }
+        });
   }
   typesOfShoes: string[] = ['Loafers', 'Sneakers'];
 
