@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
@@ -7,83 +7,78 @@ import { MaterialModule } from 'src/app/material.module';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ClientService } from 'src/app/services/client.service';
+import { Client } from 'src/app/models/client.model';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 
-export interface Section {
-  name: string;
-  updated: Date;
-}
 
 @Component({
   selector: 'app-lists',
   standalone: true,
-  imports: [MatListModule, MatCardModule, DatePipe,MatIconModule, MaterialModule ],
+  imports: [MatListModule, MatCardModule, DatePipe,MatIconModule, MaterialModule,CommonModule ],
   templateUrl: './listsclient.component.html',
 })
 export class AppListsComponent {
+  clients: Client[] = []; 
+  displayedColumns: string[] = ['nom', 'prenom', 'actions']; 
+  isLoading: boolean = false; 
+  errorMessage: string = ''; 
 
-  constructor(private dialog: MatDialog,private router: Router) {}
-  // Liste des clients (statique pour cet exemple)
-  clients = [
-    { nom: 'Dupont Jean', email: 'jean.dupont@mail.com', telephone: '0123456789' },
-    { nom: 'Martin Sophie', email: 'sophie.martin@mail.com', telephone: '0987654321' },
-    { nom: 'Lefevre Paul', email: 'paul.lefevre@mail.com', telephone: '0147258369' },
-    { nom: 'Dubois Claire', email: 'claire.dubois@mail.com', telephone: '0212345678' }
-  ];
-  // Colonnes à afficher dans le tableau
-  displayedColumns: string[] = ['nom', 'email', 'telephone', 'actions'];
+  constructor(
+    private clientService: ClientService, 
+    private dialog: MatDialog, 
+    private router: Router 
+  ) {}
 
-  // Ajouter un client
-  ajouterClient() {
-  // Naviguer vers la liste des clients
-  this.router.navigate(['/ui-components/ajoute-client']);
+  ngOnInit(): void {
+    this.fetchClients(); 
   }
 
-  // Modifier un client
-  modifierClient(client: any) {
-    this.router.navigate(['/ui-components/modife-compte']);
+ 
+  fetchClients(): void {
+    this.isLoading = true; 
+    this.clientService.getAllClients().subscribe(
+      (data) => {
+        this.clients = data;
+        this.isLoading = false; 
+      },
+      (error) => {
+        this.errorMessage = 'Erreur lors du chargement des clients.';
+        this.isLoading = false;
+      }
+    );
   }
 
-  // Supprimer un client
-  supprimerClient(client: any) {
-       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          width: '300px',
-          data: { message: 'Êtes-vous sûr de vouloir supprimer ce compte ?' },
-        });
-    
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            console.log('Compte supprimé :', client);
-            this.clients = this.clients.filter((c) => c !== client);
-          } else {
-            console.log('Suppression annulée');
+  // Méthode pour naviguer vers la page d'ajout de client
+  ajouterClient(): void {
+    this.router.navigate(['/ui-components/ajoute-client']);
+  }
+
+  // Méthode pour naviguer vers la page de modification d'un client
+  modifierClient(client: Client): void {
+    this.router.navigate(['/ui-components/modife-compte'], { state: { client } });
+  }
+
+  // Méthode pour supprimer un client
+  supprimerClient(client: Client): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: { message: 'Êtes-vous sûr de vouloir supprimer ce client ?' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.clientService.deleteClient(client.id).subscribe(
+          () => {
+            this.clients = this.clients.filter((c) => c.id !== client.id);
+          },
+          (error) => {
+            this.errorMessage = 'Erreur lors de la suppression du client.';
           }
-        });
+        );
+      }
+    });
   }
-  typesOfShoes: string[] = ['Loafers', 'Sneakers'];
-
-  folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/24'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/24'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/24'),
-    },
-  ];
-  notes: Section[] = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/24'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/24'),
-    },
-  ];
 }
