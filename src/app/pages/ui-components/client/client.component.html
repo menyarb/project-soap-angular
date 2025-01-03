@@ -3,21 +3,16 @@
     <mat-card-title>Ajouter un Client</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
       <div class="row">
-        <!-- Champ ID -->
-        <div class="col-lg-4 col-sm-6">
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>ID</mat-label>
-            <input matInput type="text" placeholder="Entrer l'ID" />
-          </mat-form-field>
-        </div>
-
         <!-- Champ Nom -->
         <div class="col-lg-4 col-sm-6">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Nom</mat-label>
-            <input matInput type="text" placeholder="Entrer le Nom" />
+            <input matInput formControlName="nom" type="text" placeholder="Entrer le Nom" />
+            <mat-error *ngIf="clientForm.get('nom')?.hasError('required')">
+              Le nom est requis.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -25,7 +20,10 @@
         <div class="col-lg-4 col-sm-6">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Prénom</mat-label>
-            <input matInput type="text" placeholder="Entrer le Prénom" />
+            <input matInput formControlName="prenom" type="text" placeholder="Entrer le Prénom" />
+            <mat-error *ngIf="clientForm.get('prenom')?.hasError('required')">
+              Le prénom est requis.
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -33,11 +31,21 @@
       <!-- Bouton Ajouter -->
       <div class="row m-t-16">
         <div class="col-lg-12">
-          <button mat-flat-button color="primary" type="button">
+          <button mat-flat-button color="primary" type="submit" [disabled]="clientForm.invalid">
             Ajouter
           </button>
         </div>
       </div>
     </form>
+
+    <!-- Message de succès -->
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
   </mat-card-content>
 </mat-card>

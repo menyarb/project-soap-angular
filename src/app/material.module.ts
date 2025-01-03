@@ -45,7 +45,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 
 @NgModule({
   declarations: [ConfirmDialogComponent],
-  imports: [MatDialogModule],
+  imports: [MatDialogModule,MatIconModule],
   exports: [
     
     MatAutocompleteModule,

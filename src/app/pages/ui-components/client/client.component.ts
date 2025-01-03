@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {CdkScrollable} from '@angular/cdk/scrolling';
@@ -8,11 +8,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ClientService } from 'src/app/services/client.service';
+import { CommonModule } from '@angular/common';
+import { Client } from 'src/app/models/client.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tooltips',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -24,13 +29,43 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   templateUrl: './client.component.html',
 })
 export class AppClientComponent {
-  //  disabled
-  disabled = new FormControl(false);
+  clientForm: FormGroup; // Define the form group
+  isLoading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
 
-  // show and hide
-  showDelay = new FormControl(1000);
-  hideDelay2 = new FormControl(2000);
+  constructor(
+    private clientService: ClientService,
+    private router: Router,
+    private fb: FormBuilder // Inject FormBuilder
+  ) {
+    // Initialize the form group
+    this.clientForm = this.fb.group({
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+    });
+  }
 
-  // change message
-  message = new FormControl('Info about the action');
+  // Method to handle form submission
+  onSubmit(): void {
+    if (this.clientForm.invalid) {
+      return; // Prevent submission if the form is invalid
+    }
+
+    this.isLoading = true; // Show loading state
+    const client: Client = this.clientForm.value; // Get form values
+
+    // Call the service to create the client
+    this.clientService.createClient(client).subscribe(
+      (newClient) => {
+        this.isLoading = false;
+        this.successMessage = 'Client ajouté avec succès!';
+        this.router.navigate(['/ui-components/listsclient']); // Redirect to client list after success
+      },
+      (error) => {
+        this.isLoading = false;
+        this.errorMessage = 'Erreur lors de la création du client. Veuillez réessayer.';
+      }
+    );
+  }
 }

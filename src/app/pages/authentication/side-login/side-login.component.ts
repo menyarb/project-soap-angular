@@ -45,7 +45,7 @@ export class AppSideLoginComponent {
         next: (response) => {
             this.authService.setAuthToken(response.accessToken);
             console.log('Login succès !', response);
-            this.router.navigate(['/dashboard']); // Redirige vers la page de connexion
+            this.router.navigate(['/dashboard']);
         },
         error: (err) => {
             this.errorMessage = 'Erreur lors de la connexion. Veuillez réessayer.';
