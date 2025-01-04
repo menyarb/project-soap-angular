@@ -3,37 +3,30 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ApiService {
-    private baseUrl = 'http://localhost:8080';
 
-    constructor(private http: HttpClient) {}
+    private gatewayUrl = '/api/student'; 
 
-       request(method: string, url: string, data?: any): Observable<any> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.getAuthToken()}`
-        });
 
-        const fullUrl = `${this.baseUrl}/${url}`;
+  constructor(private http: HttpClient) { }
 
-        switch (method.toLowerCase()) {
-            case 'get':
-                return this.http.get(fullUrl, { headers, withCredentials: true });
-            case 'post':
-                return this.http.post(fullUrl, data, { headers, withCredentials: true });
-            case 'put':
-                return this.http.put(fullUrl, data, { headers, withCredentials: true });
-            case 'delete':
-                return this.http.delete(fullUrl, { headers,withCredentials: true });
-            default:
-                throw new Error(`Méthode HTTP non supportée: ${method}`);
-        }
-    }
+  // Exemple d'appel pour obtenir les étudiants
+  getStudents(): Observable<any> {
+    return this.http.get(`${this.gatewayUrl}/all`);
+  }
+
 
   
-    getAuthToken(): string | null {
-        return window.localStorage.getItem("auth_token");
-    }
+  createStudent(student: any): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(`${this.gatewayUrl}/create`, student, { headers });
+  }
+    // Supprimer un étudiant par ID
+    deleteStudent(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.gatewayUrl}/${id}`);
+      }
+  
+
 }

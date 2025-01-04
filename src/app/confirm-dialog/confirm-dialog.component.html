@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <p>{{ data.message }}</p>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Annuler</button>
-  <button mat-raised-button color="warn" (click)="onConfirm()">Confirmer</button>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button class="cancel-button" (click)="onCancel()">Annuler</button>
+  <button mat-raised-button color="warn" class="confirm-button" (click)="onConfirm()">Confirmer</button>
 </mat-dialog-actions>

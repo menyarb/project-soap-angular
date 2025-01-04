@@ -1,0 +1,61 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title>Ajouter un étudiant</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="addStudent()">
+      <div class="row">
+        <!-- Champ Prénom -->
+        <div class="col-lg-4 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Prénom</mat-label>
+            <input matInput [(ngModel)]="newStudent.firstName" name="firstName" placeholder="Entrer le prénom" required />
+          </mat-form-field>
+        </div>
+
+        <!-- Champ Nom -->
+        <div class="col-lg-4 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input matInput [(ngModel)]="newStudent.lastName" name="lastName" placeholder="Entrer le nom" required />
+          </mat-form-field>
+        </div>
+
+        <!-- Champ Email -->
+        <div class="col-lg-4 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="newStudent.email" name="email" placeholder="Entrer l'email" required type="email" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Champ Rue -->
+        <div class="col-lg-4 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Rue</mat-label>
+            <input matInput [(ngModel)]="newStudent.street" name="street" placeholder="Entrer la rue" required />
+          </mat-form-field>
+        </div>
+
+        <!-- Champ Ville -->
+        <div class="col-lg-4 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Ville</mat-label>
+            <input matInput [(ngModel)]="newStudent.city" name="city" placeholder="Entrer la ville" required />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Bouton Ajouter -->
+      <div class="row m-t-16">
+        <div class="col-lg-12">
+          <button mat-flat-button color="primary" type="submit">
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

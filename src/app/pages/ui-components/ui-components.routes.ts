@@ -2,45 +2,28 @@ import { Routes } from '@angular/router';
 
 // ui
 
-import { AppListsComponent } from './listsclient/listsclient.component';
-import { AppListsCompteComponent } from './listscompte/listscompte.component';
-import { AppClientComponent } from './client/client.component';
-import { Compte } from './compteBank/compte';
-import { ModifeClientComponent } from './modife-client/modife-client.component';
-import { ModifeCompteComponent } from './modife-compte/modife-compte.component';
+
+import { AppListsCompteComponent } from './liste-student/listscompte.component';
+
+import { Compte } from './ajouter_student/compte';
 
 export const UiComponentsRoutes: Routes = [
   {
     path: '',
     children: [
-     
-    
+
       {
-        path: 'listsclient',
-        component: AppListsComponent,
-      },
-      {
-        path: 'listsCompte',
+        path: 'list-student',
         component: AppListsCompteComponent,
       }, 
       
      
+
       {
-        path: 'ajoute-client',
-        component: AppClientComponent,
-      },
-      {
-        path: 'modife-client',
-        component: ModifeClientComponent,
-      },
-      {
-        path: 'Compte',
+        path: 'add-student',
         component: Compte,
       },
-      {
-        path: 'modife-compte',
-        component: ModifeCompteComponent,
-      },
+     
     ],
   },
 ];

@@ -5,27 +5,14 @@ export const navItems: NavItem[] = [
     navCap: 'Home',
   },
 
+ 
   {
-    displayName: 'Client',
+    displayName: 'student',
     iconName: 'user',
     bgcolor: 'primary',
-    route: '/ui-components/listsclient',
+    route: '/ui-components/list-student',
   },
-  {
-    displayName: 'Compte',
-    iconName: 'user',
-    bgcolor: 'primary',
-    route: '/ui-components/listsCompte',
-  },
-  {
-    navCap: 'Auth',
-  },
-  {
-    displayName: 'Login',
-    iconName: 'lock',
-    bgcolor: 'accent',
-    route: '/authentication/login',
-  },
+
  
 
 ];
