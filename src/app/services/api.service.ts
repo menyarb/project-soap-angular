@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
+
     private gatewayUrl = '/api/student'; 
 
 
@@ -27,6 +28,14 @@ export class ApiService {
     deleteStudent(id: number): Observable<void> {
         return this.http.delete<void>(`${this.gatewayUrl}/${id}`);
       }
+   // Mettre à jour un étudiant par ID
+   updateStudent(id: number, student: any): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.put(`${this.gatewayUrl}/update/${id}`, student, { headers });
+  }
+  getStudentById(id: number): Observable<any> {
+    return this.http.get(`${this.gatewayUrl}/getById/${id}`);
+  }
   
 
 }

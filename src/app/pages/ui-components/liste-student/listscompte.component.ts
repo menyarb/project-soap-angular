@@ -18,6 +18,7 @@ import { ApiService } from 'src/app/services/api.service';
   standalone: true,
   imports: [MatListModule, MatCardModule, DatePipe, MatIconModule,MatTableModule,MaterialModule],
   templateUrl: './liste-student.component.html',
+  styleUrls: ['./liste-student.component.css']
 })
 export class AppListsCompteComponent {
   students: any[] = [];
@@ -45,9 +46,10 @@ export class AppListsCompteComponent {
     
   
 
-  modifierEtudiant(student: any): void {
-    // Logic to modify the student
-  }
+    modifierEtudiant(student: any): void {
+      // Logic to modify the student
+      this.router.navigate(['/ui-components/edit-student', student.id]);
+    }
 
   supprimerEtudiant(student: any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

@@ -7,7 +7,7 @@ export const navItems: NavItem[] = [
 
  
   {
-    displayName: 'student',
+    displayName: ' étudiant',
     iconName: 'user',
     bgcolor: 'primary',
     route: '/ui-components/list-student',
